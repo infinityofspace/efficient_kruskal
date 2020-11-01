@@ -63,13 +63,13 @@ class Graph:
             for child_node in self._adjacency_dict[node]:
                 self.__traverse_nodes__(child_node, visited_nodes)
 
-    def __traverse_edges__(self, node, parent_node, visited_nodes) -> bool:
+    def __search_circle__(self, node, parent_node, visited_nodes):
         if node not in visited_nodes:
             visited_nodes.add(node)
 
             for child_node in self._adjacency_dict[node]:
                 if child_node != parent_node:
-                    if self.__traverse_edges__(child_node, node, visited_nodes):
+                    if self.__search_circle__(child_node, node, visited_nodes):
                         return True
 
             return False
@@ -79,12 +79,13 @@ class Graph:
     def contains_circle(self) -> bool:
         visited_nodes = set()
 
-        node = next(iter(self))
+        for node in self:
+            if node not in visited_nodes:
+                if self.__search_circle__(node, None, visited_nodes):
+                    return True
 
-        if node is None:
-            return False
+        return False
 
-        return self.__traverse_edges__(node, None, visited_nodes)
 
     def __str__(self):
         output = ""

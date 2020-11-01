@@ -4,10 +4,8 @@ from efficient_kruskal.util import Graph
 def kruskal(graph: Graph, min=True):
     min_span_tree = Graph()
 
-    edges = sorted(graph.edges, key=lambda edge: edge[2], reverse=not min)
-
-    # edges = graph.edges
-    # quick_sort(edges, 0, len(edges) - 1)
+    edges = graph.edges
+    quick_sort(edges)
 
     for i in range(len(edges)):
         edge = edges[i]
@@ -38,7 +36,13 @@ def split(l, left, right):
     return i
 
 
-def quick_sort(l, left: int, right: int):
+def quick_sort(l, left: int = None, right: int = None):
+    if left is None:
+        left = 0
+
+    if right is None:
+        right = len(l) - 1
+
     if len(l) == 1:
         return l
 
