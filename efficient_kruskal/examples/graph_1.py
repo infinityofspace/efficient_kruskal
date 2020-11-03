@@ -1,4 +1,4 @@
-from efficient_kruskal.kruskal.kruskal import kruskal
+from efficient_kruskal.kruskal.kruskal import kruskal, kruskal_slow
 from efficient_kruskal.util import Graph
 
 
@@ -13,9 +13,7 @@ def main():
     g.add_edge("C", "G", 5)
     g.add_edge("G", "E", 1)
 
-    print(g.connected())
-
-    print(g.contains_circle())
+    print("connected: {}".format(g.connected()))
 
     min_span_tree = kruskal(g)
 

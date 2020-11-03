@@ -1,11 +1,54 @@
 from efficient_kruskal.util import Graph
+from efficient_kruskal.util.sort import quick_sort
 
 
-def kruskal(graph: Graph, min=True):
+class DisjointSet:
+
+    def __init__(self, item):
+        """
+        Initialise a new disjoint set with a single item.
+
+        :param item: the item in the disjoint set
+        """
+
+        self.item = item
+        self.parent = self
+        self.size = 1
+
+    def find(self):
+        """
+        Find the parent of the set.
+
+        :return: parent for this set
+        """
+
+        i = self
+
+        while i.parent != i:
+            i.parent = i.parent.parent
+            i = i.parent
+        return i.parent
+
+    def union(self, item):
+        item_1 = self.find()
+        item_2 = item.find()
+
+        if item_1 == item_2:
+            return
+
+        if item_1.size < item_2.size:
+            item_1.parent = item_2
+            item_2.size += item_1.size
+        else:
+            item_2.parent = item_1
+            item_1.size += item_2.size
+
+
+def kruskal_slow(graph: Graph, min=True):
     min_span_tree = Graph()
 
     edges = graph.edges
-    quick_sort(edges)
+    edges = sorted(edges, key=lambda x: x[2])
 
     for i in range(len(edges)):
         edge = edges[i]
@@ -18,35 +61,26 @@ def kruskal(graph: Graph, min=True):
     return min_span_tree
 
 
-def split(l, left, right):
-    i = left
-    piv = l[right][2]
+def kruskal(graph: Graph, min=True):
+    min_span_tree = Graph()
 
-    for j in range(left, right):
-        if l[j][2] < piv:
-            temp = l[i]
-            l[i] = l[j]
-            l[j] = temp
-            i += 1
+    edges = graph.edges
+    edges = sorted(edges, key=lambda x: x[2])
 
-    temp = l[i]
-    l[i] = l[right]
-    l[right] = temp
+    disjoint_sets = {}
 
-    return i
+    for i in range(len(edges)):
+        edge = edges[i]
+        node_1, node_2, _ = edge
 
+        node_1_disjoint_set = disjoint_sets.setdefault(node_1, DisjointSet(node_1))
+        node_2_disjoint_set = disjoint_sets.setdefault(node_2, DisjointSet(node_2))
 
-def quick_sort(l, left: int = None, right: int = None):
-    if left is None:
-        left = 0
+        p_1 = node_1_disjoint_set.find()
+        p_2 = node_2_disjoint_set.find()
 
-    if right is None:
-        right = len(l) - 1
+        if p_1 != p_2:
+            node_1_disjoint_set.union(node_2_disjoint_set)
+            min_span_tree.add_edge(*edge)
 
-    if len(l) == 1:
-        return l
-
-    if left < right:
-        split_idx = split(l, left, right)
-        quick_sort(l, left, split_idx - 1)
-        quick_sort(l, split_idx + 1, right)
+    return min_span_tree

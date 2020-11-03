@@ -1,6 +1,8 @@
 import argparse
 import random
+import time
 
+from efficient_kruskal.kruskal.kruskal import kruskal, kruskal_slow
 from efficient_kruskal.util import Graph
 
 
@@ -23,7 +25,13 @@ def main():
         weight = random.randint(0, 20)
         g.add_edge(node_one, node_two, weight)
 
-    # if not g.connected():
+    start_time = time.time()
+    kruskal(g)
+    print("{:.3f}s".format(time.time() - start_time))
+
+    start_time = time.time()
+    kruskal_slow(g)
+    print("{:.3f}s".format(time.time() - start_time))
 
 
 if __name__ == '__main__':

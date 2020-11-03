@@ -12,9 +12,7 @@ def main():
     g.add_edge("B", "E", 3)
     g.add_edge("C", "D", 2)
 
-    print(g.connected())
-
-    print(g.contains_circle())
+    print("connected: {}".format(g.connected()))
 
     min_span_tree = kruskal(g)
 
