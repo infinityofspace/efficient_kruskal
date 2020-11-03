@@ -44,11 +44,11 @@ class DisjointSet:
             item_1.size += item_2.size
 
 
-def kruskal_slow(graph: Graph, min=True):
+def kruskal_slow(graph: Graph):
     min_span_tree = Graph()
 
     edges = graph.edges
-    edges = sorted(edges, key=lambda x: x[2])
+    quick_sort(edges)
 
     for i in range(len(edges)):
         edge = edges[i]
@@ -61,11 +61,11 @@ def kruskal_slow(graph: Graph, min=True):
     return min_span_tree
 
 
-def kruskal(graph: Graph, min=True):
+def kruskal(graph: Graph):
     min_span_tree = Graph()
 
     edges = graph.edges
-    edges = sorted(edges, key=lambda x: x[2])
+    quick_sort(edges)
 
     disjoint_sets = {}
 
