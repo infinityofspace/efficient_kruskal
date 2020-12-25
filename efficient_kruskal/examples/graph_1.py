@@ -1,4 +1,4 @@
-from efficient_kruskal.kruskal.kruskal import kruskal, kruskal_slow
+from efficient_kruskal.kruskal.kruskal import kruskal
 from efficient_kruskal.util import Graph
 
 

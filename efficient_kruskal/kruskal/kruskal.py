@@ -1,47 +1,6 @@
+from efficient_kruskal.disjointset.disjointset import DisjointSet
 from efficient_kruskal.util import Graph
 from efficient_kruskal.util.sort import quick_sort
-
-
-class DisjointSet:
-
-    def __init__(self, item):
-        """
-        Initialise a new disjoint set with a single item.
-
-        :param item: the item in the disjoint set
-        """
-
-        self.item = item
-        self.parent = self
-        self.size = 1
-
-    def find(self):
-        """
-        Find the parent of the set.
-
-        :return: parent for this set
-        """
-
-        i = self
-
-        while i.parent != i:
-            i.parent = i.parent.parent
-            i = i.parent
-        return i.parent
-
-    def union(self, item):
-        item_1 = self.find()
-        item_2 = item.find()
-
-        if item_1 == item_2:
-            return
-
-        if item_1.size < item_2.size:
-            item_1.parent = item_2
-            item_2.size += item_1.size
-        else:
-            item_2.parent = item_1
-            item_1.size += item_2.size
 
 
 def kruskal_slow(graph: Graph):
@@ -50,9 +9,7 @@ def kruskal_slow(graph: Graph):
     edges = graph.edges
     quick_sort(edges)
 
-    for i in range(len(edges)):
-        edge = edges[i]
-
+    for edge in edges:
         min_span_tree.add_edge(*edge)
 
         if min_span_tree.contains_circle():
@@ -69,18 +26,20 @@ def kruskal(graph: Graph):
 
     disjoint_sets = {}
 
+    for node in graph.nodes:
+        disjoint_sets[node] = DisjointSet(node)
+
     for i in range(len(edges)):
         edge = edges[i]
         node_1, node_2, _ = edge
 
-        node_1_disjoint_set = disjoint_sets.setdefault(node_1, DisjointSet(node_1))
-        node_2_disjoint_set = disjoint_sets.setdefault(node_2, DisjointSet(node_2))
+        node_1_set = disjoint_sets[node_1]
+        node_2_set = disjoint_sets[node_2]
 
-        p_1 = node_1_disjoint_set.find()
-        p_2 = node_2_disjoint_set.find()
+        if node_1_set.find() != node_2_set.find():
+            node_1_set.union(node_2_set)
 
-        if p_1 != p_2:
-            node_1_disjoint_set.union(node_2_disjoint_set)
+            # add edge to Graph object
             min_span_tree.add_edge(*edge)
 
     return min_span_tree

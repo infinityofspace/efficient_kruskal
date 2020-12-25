@@ -4,7 +4,7 @@ from typing import Any
 
 class Graph:
 
-    def __init__(self, adjacency_dict=None, edges=None):
+    def __init__(self, adjacency_dict=None, edges=None, nodes=None):
         if adjacency_dict is None:
             adjacency_dict = defaultdict(dict)
         self._adjacency_dict = adjacency_dict
@@ -13,9 +13,12 @@ class Graph:
             edges = []
         self._edges = edges
 
+        if nodes is None:
+            nodes = set()
+        self._nodes = nodes
+
     def add_edge(self, first_node: Any, second_node: Any, weight: Any):
         """
-        https://wiki.python.org/moin/TimeComplexity
 
         :param first_node:
         :param second_node:
@@ -28,6 +31,9 @@ class Graph:
 
         self._edges.append([first_node, second_node, weight])
 
+        self._nodes.add(first_node)
+        self._nodes.add(second_node)
+
     def remove_edge(self, first_node: Any, second_node: Any):
         del self._adjacency_dict[first_node][second_node]
         del self._adjacency_dict[second_node][first_node]
@@ -39,6 +45,10 @@ class Graph:
     @property
     def edges(self):
         return self._edges
+
+    @property
+    def nodes(self):
+        return self._nodes
 
     def add_node(self, node: Any):
         self._adjacency_dict[node] = {}
@@ -85,7 +95,6 @@ class Graph:
                     return True
 
         return False
-
 
     def __str__(self):
         output = ""

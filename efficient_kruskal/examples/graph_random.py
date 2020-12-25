@@ -9,7 +9,6 @@ from efficient_kruskal.util import Graph
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("nodes", type=int, help="Number of unique nodes in the graph.")
-    # parser.add_argument("weights", type=int, default=5e2, help="Number of unique nodes in the graph.")
 
     args = parser.parse_args()
 
