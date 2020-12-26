@@ -30,3 +30,5 @@ def quick_sort(l, left: int = None, right: int = None):
         split_idx = split(l, left, right)
         quick_sort(l, left, split_idx - 1)
         quick_sort(l, split_idx + 1, right)
+
+    return l

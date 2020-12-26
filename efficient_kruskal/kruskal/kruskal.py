@@ -1,13 +1,16 @@
 from efficient_kruskal.disjointset.disjointset import DisjointSet
 from efficient_kruskal.util import Graph
-from efficient_kruskal.util.sort import quick_sort
 
 
-def kruskal_slow(graph: Graph):
+def kruskal_slow(graph: Graph, sort_func=None):
     min_span_tree = Graph()
 
     edges = graph.edges
-    quick_sort(edges)
+    if sort_func is None:
+        # sorted uses Timsort (https://wiki.python.org/moin/HowTo/Sorting)
+        edges = sorted(edges)
+    else:
+        edges = sort_func(edges)
 
     for edge in edges:
         min_span_tree.add_edge(*edge)
@@ -18,11 +21,15 @@ def kruskal_slow(graph: Graph):
     return min_span_tree
 
 
-def kruskal(graph: Graph):
+def kruskal(graph: Graph, sort_func=None):
     min_span_tree = Graph()
 
     edges = graph.edges
-    quick_sort(edges)
+    if sort_func is None:
+        # sorted uses Timsort (https://wiki.python.org/moin/HowTo/Sorting)
+        edges = sorted(edges)
+    else:
+        edges = sort_func(edges)
 
     disjoint_sets = {}
 
