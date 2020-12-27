@@ -1,8 +1,17 @@
 import math
 from multiprocessing import Pool, cpu_count
+from typing import List
 
 
-def merge(l, r):
+def merge(l: List, r: List) -> List:
+    """
+    Merge and sort two list parts in ascending order.
+
+    :param l: left part of the list
+    :param r: right part of the list
+    :return: merged and sorted list of r and l
+    """
+
     sorted_list = []
     l_idx = 0
     r_idx = 0
@@ -23,7 +32,15 @@ def merge(l, r):
     return sorted_list
 
 
-def mergesort(data):
+def mergesort(data: List) -> List:
+    """
+    Recursive split the provided list into nearly equal sized left and right part and sort them in ascending order.
+    The used algorithm is mergesort.
+
+    :param data: list of data to be sorted
+    :return: sorted list
+    """
+
     if len(data) <= 1:
         return data
 
@@ -35,7 +52,14 @@ def mergesort(data):
     return merge(l, r)
 
 
-def parallel_mergesort(data):
+def parallel_mergesort(data: List) -> List:
+    """
+    Sort the provided list in ascending order with parallel mergesort algorithm.
+
+    :param data: list of data to be sorted
+    :return: sorted list
+    """
+
     pool = Pool(processes=cpu_count())
 
     chunk_size = math.ceil(len(data) / cpu_count())

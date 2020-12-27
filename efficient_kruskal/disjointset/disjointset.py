@@ -41,15 +41,18 @@ class DisjointSet:
         """
         Unite this set and the provided disjoint set by size param.
 
-        :param second_set:
+        :param second_set: the sets to be unite
         """
 
+        # get the parent of each disjoint set
         parent_1 = self.find()
         parent_2 = second_set.find()
 
+        # check if both sets are the same
         if parent_1 == parent_2:
             return
 
+        # add the smaller disjoint set to the bigger set and combine both sizes
         if parent_1.size < parent_2.size:
             parent_1.parent = parent_2
             parent_2.size += parent_1.size

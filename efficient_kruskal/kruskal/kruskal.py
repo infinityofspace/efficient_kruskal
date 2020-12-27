@@ -2,7 +2,17 @@ from efficient_kruskal.disjointset.disjointset import DisjointSet
 from efficient_kruskal.util import Graph
 
 
-def kruskal_slow(graph: Graph, sort_func=None):
+def kruskal_slow(graph: Graph, sort_func=None) -> Graph:
+    """
+    Find the minimal spanning tree with the kruskal algorithm.
+    The internal data structure is Graph object.
+
+    :param graph: the graph to be used for the kruskal algorithm
+    :param sort_func: [optional] the sort function which will be used to sort the edges. if not provided the default std
+                      sort function will be used
+    :return: minimal spanning tree found by kruskal algorithm
+    """
+
     min_span_tree = Graph()
 
     edges = graph.edges
@@ -22,6 +32,16 @@ def kruskal_slow(graph: Graph, sort_func=None):
 
 
 def kruskal(graph: Graph, sort_func=None):
+    """
+    Find the minimal spanning tree with the kruskal algorithm.
+    The internal data structure is a disjoint set.
+
+    :param graph: the graph to be used for the kruskal algorithm
+    :param sort_func: [optional] the sort function which will be used to sort the edges. if not provided the default std
+                      sort function will be used
+    :return: minimal spanning tree found by kruskal algorithm
+    """
+
     min_span_tree = Graph()
 
     edges = graph.edges
