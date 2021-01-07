@@ -1,9 +1,25 @@
 ## Kruskal
 
-The Kruskal algorithm defined in the kruskal module computes the minimal spanning tree of a provided Graph object in O(
-|E| log |V|).
+The Kruskal algorithm defined in the kruskal module computes the minimal spanning tree of a provided Graph object in O(|E| log |V|) time.
 
-### Modules
+### Usage:
+
+Go into the project directory (the directory which contains this Readme file). You can run the different example with
+the following command:
+
+```commandline
+python -m efficient_kruskal.examples.<the-example-name>
+```
+
+Replace the <the-example-name> the specific name.
+
+For example, to start the graph_1 example the run command is:
+
+```commandline
+python -m efficient_kruskal.examples.graph_1
+```
+
+### Modules:
 
 The module efficient_kruskal consists of multiple modules.
 
