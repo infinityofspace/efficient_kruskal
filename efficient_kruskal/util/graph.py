@@ -122,11 +122,12 @@ class Graph:
         else:
             return True
 
-    def contains_circle(self) -> bool:
+    def contains_cycle(self) -> bool:
         """
-        Check if the graph contains a circle
+        Check if the graph contains a cycle.
+        Time complexity: O(V + E)
 
-        :return: boolean if the graph contains a circle
+        :return: boolean if the graph contains a cycle
         """
 
         visited_nodes = set()

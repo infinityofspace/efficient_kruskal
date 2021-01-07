@@ -1,31 +1,40 @@
 import argparse
+import pickle
 import random
 import time
 
 from efficient_kruskal.kruskal.kruskal import kruskal, kruskal_slow
 from efficient_kruskal.util import Graph
-from efficient_kruskal.util.parallel_sort import parallel_mergesort, mergesort
+from efficient_kruskal.util.merge_sort import parallel_mergesort, mergesort
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("nodes", type=int, help="Number of unique nodes in the graph.")
+    parser.add_argument("--nodes", "-n", type=int, help="Number of unique nodes in the graph.")
+    parser.add_argument("--save", "-s", help="Store the random generated graph to the provided file path.")
+    parser.add_argument("--graph", "-g", help="Load the graph from the provided file path.")
 
     args = parser.parse_args()
 
     n_nodes = args.nodes
 
-    assert n_nodes > 0
+    if args.graph is None:
+        g = Graph()
 
-    g = Graph()
+        for _ in range(n_nodes):
+            node_one = node_two = 0
+            while node_one == node_two:
+                node_one = random.randint(0, n_nodes)
+                node_two = random.randint(0, n_nodes)
+            weight = random.randint(0, 20)
+            g.add_edge(node_one, node_two, weight)
+    else:
+        with open(args.graph, "rb") as f:
+            g = pickle.load(f)
 
-    for _ in range(n_nodes):
-        node_one = node_two = 0
-        while node_one == node_two:
-            node_one = random.randint(0, n_nodes)
-            node_two = random.randint(0, n_nodes)
-        weight = random.randint(0, 20)
-        g.add_edge(node_one, node_two, weight)
+    if args.save is not None:
+        with open(args.save, "wb") as f:
+            pickle.dump(g, f)
 
     ###################################
     # test data structure performance #
