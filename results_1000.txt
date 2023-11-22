@@ -1,0 +1,38 @@
+test for 100 runs
+test data structure performance
+
+kruskal with disjoint set:
+	 avg: 0.0026455307s
+	 min: 0.0025651455s
+	 max: 0.0041027069s
+	 stdev: 0.0002069056s
+kruskal with adjacency matrix:
+	 avg: 0.1105433369s
+	 min: 0.1098575592s
+	 max: 0.1147205830s
+	 stdev: 0.0007350204s
+
+disjoint set is 0.0239320684 times faster than adjacency matrix
+
+
+test sort algorithm performance
+
+kruskal with mergesort:
+	 avg: 0.0026394725s
+	 min: 0.0025682449s
+	 max: 0.0042884350s
+	 stdev: 0.0002481773s
+kruskal with parallel mergesort:
+	 avg: 0.0126922965s
+	 min: 0.0116338730s
+	 max: 0.0197327137s
+	 stdev: 0.0016246414s
+kruskal with standard sort:
+	 avg: 0.0014697480s
+	 min: 0.0013904572s
+	 max: 0.0036892891s
+	 stdev: 0.0002657343s
+
+parallel mergesort is 0.2079586215 times faster than mergesort
+standard sort is 8.6356955960 times faster than parallel mergesort
+mergesort is 0.5568339995 times faster than standard sort

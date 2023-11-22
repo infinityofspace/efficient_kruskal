@@ -1,6 +1,8 @@
 ## Kruskal
 
 The Kruskal algorithm defined in the kruskal module computes the minimal spanning tree of a provided Graph object in O(|E| log |V|) time.
+This implementation compares the efficiency (runtime) of the algorithm in different implementation variants. For the results consider 
+the [Benchmark](#benchmark) section.
 
 ### Usage:
 
@@ -41,3 +43,40 @@ kruskal and uses the disjoint data structure implemented in the util module.
 This module contains the Graph object which provides some simple methods to print or add new edges. Also in this module
 the mergesort algorithm is implemented. This exists in a parallel and non-parallel implementation. In addition, the
 module contains the implementation of the disjoint data set.
+
+## Benchmark
+
+You can test the performance of different sort and data structure implementations with the graph_random.py script.
+The script allows you to generate a random graph and perform several performance benchmarks.
+
+Example benchmark with 100 runs and 500 nodes:
+```commandline
+python -m efficient_kruskal.examples.graph_random --nodes 500 --runs 100
+```
+
+All options:
+```commandline
+python -m efficient_kruskal.examples.graph_random --help
+```
+
+```commandline
+usage: graph_random.py [-h] [--nodes NODES] [--save SAVE] [--graph GRAPH] [--format FORMAT] [--seed SEED] [--runs RUNS]
+
+options:
+  -h, --help            show this help message and exit
+  --nodes NODES, -n NODES
+                        Number of unique nodes in the graph.
+  --save SAVE, -s SAVE  Store the random generated graph to the provided file path.
+  --graph GRAPH, -g GRAPH
+                        Load the graph from the provided file path.
+  --format FORMAT, -f FORMAT
+                        Number of digits formatted duration logging.
+  --seed SEED           Seed to use for random init
+  --runs RUNS, -r RUNS  Number of runs
+```
+
+You can find some results in the `results_*.txt` files calculate on an 6 core 3.8GHz CPU.
+
+## License
+
+[MIT](License) - Copyright (c) 2023 Marvin Heptner

@@ -60,20 +60,19 @@ def parallel_mergesort(data: List) -> List:
     :return: sorted list
     """
 
-    pool = Pool(processes=cpu_count())
+    with Pool(processes=cpu_count()) as pool:
+        chunk_size = math.ceil(len(data) / cpu_count())
 
-    chunk_size = math.ceil(len(data) / cpu_count())
+        chunked_data = [data[i:i + chunk_size] for i in range(0, len(data), chunk_size)]
 
-    chunked_data = [data[i:i + chunk_size] for i in range(0, len(data), chunk_size)]
+        sorted_parts = pool.map(mergesort, chunked_data)
 
-    sorted_parts = pool.map(mergesort, chunked_data)
-
-    while len(sorted_parts) > 1:
-        i = iter(sorted_parts)
-        tuple_list = list(zip(i, i))
-        if len(sorted_parts) % 2 == 0:
-            sorted_parts = pool.starmap(merge, tuple_list)
-        else:
-            sorted_parts = pool.starmap(merge, tuple_list) + sorted_parts[-1:]
+        while len(sorted_parts) > 1:
+            i = iter(sorted_parts)
+            tuple_list = list(zip(i, i))
+            if len(sorted_parts) % 2 == 0:
+                sorted_parts = pool.starmap(merge, tuple_list)
+            else:
+                sorted_parts = pool.starmap(merge, tuple_list) + sorted_parts[-1:]
 
     return sorted_parts[0]
